@@ -20,5 +20,7 @@ jobs:
 
           script: |
             cd ~/cloud-based-backend-service
-            git pull
+            git fetch origin
+            git checkout main
+            git reset --hard origin/main
             docker compose up -d --build
