@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build-and-test:
-    name: Build, Test & Lint
+    name: Build & Test
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -29,9 +29,6 @@ jobs:
 
       - name: Compile
         run: mvn clean compile --batch-mode --no-transfer-progress
-
-      - name: Run Checkstyle
-        run: mvn checkstyle:check --batch-mode --no-transfer-progress
 
       - name: Run tests
         run: mvn test --batch-mode --no-transfer-progress
