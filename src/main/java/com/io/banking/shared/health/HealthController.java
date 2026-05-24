@@ -11,4 +11,9 @@ public class HealthController {
         return "Server is up and running successfully!";
     }
 
+    @GetMapping("/version")
+    public String version() {
+        return "1.0";
+    }
+
 }
