@@ -8,8 +8,8 @@
         <version>3.3.5</version>
         <relativePath/>
     </parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>com.example.bank</groupId>
+	<artifactId>bank-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Cloud-Deployed Backend Service</name>
 	<description>Cloud-Deployed Backend Service</description>

@@ -1,9 +1,9 @@
 services:
   postgres:
     image: postgres:16
-    container_name: cdb-postgres
+    container_name: postgresql
     environment:
-      POSTGRES_DB: cdb
+      POSTGRES_DB: db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -13,7 +13,7 @@ services:
 
   backend:
     build: .
-    container_name: cloud-backend
+    container_name: backend
     depends_on:
       - postgres
     ports:
@@ -23,3 +23,5 @@ services:
 
 volumes:
   postgres_data:
+
+##docker compose up --build -d
