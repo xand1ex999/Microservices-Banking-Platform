@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class LogNotificationServiceImpl implements NotificationService {
+public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void notifyUserRegistered(Long userId, String email) {
