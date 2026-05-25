@@ -1,10 +1,10 @@
 package com.io.banking.auth.service.impl;
 
-import com.io.banking.auth.event.UserRegisteredEvent;
 import com.io.banking.auth.model.dto.AuthResponse;
 import com.io.banking.auth.model.dto.LoginRequest;
 import com.io.banking.auth.model.dto.RegistrationRequest;
 import com.io.banking.auth.model.entity.RefreshToken;
+import com.io.banking.auth.publisher.AuthEventPublisher;
 import com.io.banking.auth.service.AuthService;
 import com.io.banking.auth.service.RefreshTokenService;
 import com.io.banking.shared.exception.InvalidCredentialsException;
@@ -17,7 +17,6 @@ import com.io.banking.users.model.entity.User;
 import com.io.banking.users.model.enums.Role;
 import com.io.banking.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
-    private final ApplicationEventPublisher eventPublisher;
+    private final AuthEventPublisher authEventPublisher;
 
     @Override
     @Transactional
@@ -50,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
         user.setActive(true);
 
         User saved = userRepository.save(user);
-        eventPublisher.publishEvent(new UserRegisteredEvent(this, saved.getId(), saved.getEmail()));
+        authEventPublisher.publishUserRegistered(saved.getId(), saved.getEmail());
         return UserMapper.toResponse(saved);
     }
 
