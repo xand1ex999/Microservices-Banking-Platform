@@ -6,11 +6,13 @@ import com.io.banking.users.model.dto.UserResponse;
 import com.io.banking.users.repository.UserRepository;
 import com.io.banking.users.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -40,5 +42,6 @@ public class UserServiceImpl implements UserService {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
         userRepository.delete(user);
+        log.info("User deleted: id={}", id);
     }
 }

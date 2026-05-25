@@ -10,6 +10,7 @@ import com.io.banking.accounts.service.AccountService;
 import com.io.banking.shared.exception.ResourceNotFoundException;
 import com.io.banking.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -42,7 +44,9 @@ public class AccountServiceImpl implements AccountService {
         account.setStatus(AccountStatus.ACTIVE);
         account.setCreatedAt(Instant.now());
 
-        return AccountMapper.toResponse(accountRepository.save(account));
+        AccountResponse response = AccountMapper.toResponse(accountRepository.save(account));
+        log.info("Account created: id={}, currency={}, userId={}", response.getId(), request.getCurrency(), userId);
+        return response;
     }
 
     @Override
@@ -74,6 +78,7 @@ public class AccountServiceImpl implements AccountService {
         var account = loadAccount(accountId);
 
         if (account.getStatus() == AccountStatus.FROZEN) {
+            log.warn("Account {} is already frozen, skipping", accountId);
             return;
         }
 
@@ -85,6 +90,7 @@ public class AccountServiceImpl implements AccountService {
 
         account.setStatus(AccountStatus.FROZEN);
         accountRepository.save(account);
+        log.info("Account frozen: id={}", accountId);
     }
 
     @Override
@@ -99,6 +105,7 @@ public class AccountServiceImpl implements AccountService {
 
         account.setStatus(AccountStatus.ACTIVE);
         accountRepository.save(account);
+        log.info("Account unfrozen: id={}", accountId);
     }
 
     private Account loadAccount(UUID id) {

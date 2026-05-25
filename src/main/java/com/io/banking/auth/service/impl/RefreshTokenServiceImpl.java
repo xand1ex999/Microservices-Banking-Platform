@@ -6,6 +6,7 @@ import com.io.banking.auth.service.RefreshTokenService;
 import com.io.banking.shared.util.HashUtils;
 import com.io.banking.users.model.entity.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.time.Instant;
 import java.util.Base64;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenServiceImpl implements RefreshTokenService {
@@ -49,6 +51,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 .ifPresent(token -> {
                     token.setRevoked(true);
                     repository.save(token);
+                    log.info("Refresh token revoked for userId={}", token.getUser().getId());
                 });
     }
 

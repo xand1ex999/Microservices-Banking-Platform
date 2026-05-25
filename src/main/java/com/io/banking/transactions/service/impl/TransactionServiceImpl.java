@@ -15,6 +15,7 @@ import com.io.banking.transactions.model.enums.TransactionType;
 import com.io.banking.transactions.repository.TransactionRepository;
 import com.io.banking.transactions.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
@@ -66,7 +68,10 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setType(request.getTransactionType());
         transaction.setStatus(TransactionStatus.SUCCESS);
 
-        return TransactionMapper.toResponse(transactionRepository.save(transaction));
+        TransactionResponse response = TransactionMapper.toResponse(transactionRepository.save(transaction));
+        log.info("Transaction created: id={}, type={}, amount={}, accountId={}",
+                response.getTransactionId(), request.getTransactionType(), request.getAmount(), request.getAccountId());
+        return response;
     }
 
     @Override

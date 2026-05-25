@@ -17,12 +17,14 @@ import com.io.banking.users.model.entity.User;
 import com.io.banking.users.model.enums.Role;
 import com.io.banking.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -49,6 +51,7 @@ public class AuthServiceImpl implements AuthService {
         user.setActive(true);
 
         User saved = userRepository.save(user);
+        log.info("User registered: id={}, email={}", saved.getId(), saved.getEmail());
         authEventPublisher.publishUserRegistered(saved.getId(), saved.getEmail());
         return UserMapper.toResponse(saved);
     }
@@ -67,6 +70,7 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtService.generateAccessToken(
                 user.getId(), user.getEmail(), user.getRole().name());
         String refreshToken = refreshTokenService.createRefreshToken(user);
+        log.info("User logged in: id={}, email={}", user.getId(), user.getEmail());
         return new AuthResponse(accessToken, refreshToken);
     }
 
