@@ -6,8 +6,6 @@ import com.io.banking.shared.exception.InvalidAmountException;
 import com.io.banking.shared.exception.InsufficientFundsException;
 import com.io.banking.shared.exception.ResourceNotFoundException;
 import com.io.banking.shared.security.model.AuthenticatedUser;
-import com.io.banking.transactions.event.MoneyDepositedEvent;
-import com.io.banking.transactions.event.MoneyWithdrawnEvent;
 import com.io.banking.transactions.mapper.TransactionMapper;
 import com.io.banking.transactions.model.dto.TransactionCreateRequest;
 import com.io.banking.transactions.model.dto.TransactionResponse;
@@ -52,8 +50,6 @@ public class TransactionServiceImpl implements TransactionService {
 
         if (request.getTransactionType() == TransactionType.DEPOSIT) {
             account.setBalance(account.getBalance().add(request.getAmount()));
-            eventPublisher.publishEvent(
-                    new MoneyDepositedEvent(this, account.getId(), user.getId(), request.getAmount()));
         }
 
         if (request.getTransactionType() == TransactionType.WITHDRAW) {
@@ -61,8 +57,6 @@ public class TransactionServiceImpl implements TransactionService {
                 throw new InsufficientFundsException("Insufficient balance");
             }
             account.setBalance(account.getBalance().subtract(request.getAmount()));
-            eventPublisher.publishEvent(
-                    new MoneyWithdrawnEvent(this, account.getId(), user.getId(), request.getAmount()));
         }
 
         var transaction = new Transaction();

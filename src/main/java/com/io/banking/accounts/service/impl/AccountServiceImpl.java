@@ -1,6 +1,5 @@
 package com.io.banking.accounts.service.impl;
 
-import com.io.banking.accounts.event.AccountFrozenEvent;
 import com.io.banking.accounts.mapper.AccountMapper;
 import com.io.banking.accounts.model.dto.AccountCreateRequest;
 import com.io.banking.accounts.model.dto.AccountResponse;
@@ -86,7 +85,6 @@ public class AccountServiceImpl implements AccountService {
 
         account.setStatus(AccountStatus.FROZEN);
         accountRepository.save(account);
-        eventPublisher.publishEvent(new AccountFrozenEvent(this, accountId));
     }
 
     @Override
