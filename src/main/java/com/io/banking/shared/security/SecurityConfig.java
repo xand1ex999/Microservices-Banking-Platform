@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 "/actuator/**",
                                 "/css/**",
                                 "/js/**",
-                                "/images/**"
+                                "/images/**",
+                                "/version"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

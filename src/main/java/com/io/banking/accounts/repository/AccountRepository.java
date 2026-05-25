@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AccountRepository extends JpaRepository<Account, UUID> {
+
     List<Account> findAllByUserId(Long userId);
+
     Page<Account> findAll(Pageable pageable);
+
 }
