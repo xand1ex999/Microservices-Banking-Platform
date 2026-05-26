@@ -42,7 +42,9 @@ services:
 
   monolith:
     profiles: ["full"]
-    build: ./monolith
+    build:
+      context: .
+      dockerfile: monolith/Dockerfile
     container_name: monolith
     depends_on:
       - postgres
@@ -54,7 +56,9 @@ services:
       KAFKA_URL: kafka:9092
 
   notification-service:
-    build: ./notification-service
+    build:
+      context: .
+      dockerfile: notification-service/Dockerfile
     container_name: notification-service
     depends_on:
       - kafka
