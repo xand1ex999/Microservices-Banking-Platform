@@ -47,7 +47,7 @@ services:
       - postgres
       - kafka
     ports:
-      - "127.0.0.1:${APP_PORT:-8080}:8080"
+      - "8080:8080"
     env_file:
       - .env
     environment:
