@@ -50,7 +50,9 @@ services:
       - postgres
       - kafka
     ports:
-      - "8080:8080"
+      - "${APP_PORT:-8080}:8080"
+    env_file:
+      - .env
     environment:
       DB_URL: jdbc:postgresql://postgres:5432/db
       KAFKA_URL: kafka:9092
