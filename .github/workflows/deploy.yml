@@ -19,8 +19,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           script: |
-            cd ~/cloud-based-backend-service
+            cd ~/deployed
             git fetch origin
             git checkout main
             git reset --hard origin/main
-            docker compose up -d --build
+            docker compose --profile full up --build -d
