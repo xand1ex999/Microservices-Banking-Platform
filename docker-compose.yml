@@ -10,6 +10,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d
 
   kafka:
     image: apache/kafka:3.7.0
@@ -68,11 +69,15 @@ services:
       dockerfile: notification-service/Dockerfile
     container_name: notification-service
     depends_on:
+      - postgres
       - kafka
     ports:
       - "8084:8084"
     environment:
       KAFKA_URL: kafka:9092
+      DB_NOTIFICATION_URL: jdbc:postgresql://postgres:5432/notifications_db
+      DB_NOTIFICATION_USERNAME: postgres
+      DB_NOTIFICATION_PASSWORD: postgres
 
 volumes:
   postgres_data:
