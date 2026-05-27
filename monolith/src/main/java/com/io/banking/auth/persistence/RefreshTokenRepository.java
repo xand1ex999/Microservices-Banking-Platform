@@ -1,4 +1,4 @@
-package com.io.banking.auth.repository;
+package com.io.banking.auth.persistence;
 
 import com.io.banking.auth.model.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;

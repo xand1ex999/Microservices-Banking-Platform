@@ -1,7 +1,7 @@
 package com.io.banking.auth.service.impl;
 
 import com.io.banking.auth.model.entity.RefreshToken;
-import com.io.banking.auth.repository.RefreshTokenRepository;
+import com.io.banking.auth.persistence.RefreshTokenRepository;
 import com.io.banking.auth.service.RefreshTokenService;
 import com.io.banking.shared.util.HashUtils;
 import com.io.banking.users.model.entity.User;

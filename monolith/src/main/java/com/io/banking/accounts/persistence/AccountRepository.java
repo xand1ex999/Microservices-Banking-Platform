@@ -1,4 +1,4 @@
-package com.io.banking.accounts.repository;
+package com.io.banking.accounts.persistence;
 
 import com.io.banking.accounts.model.entity.Account;
 import org.springframework.data.domain.Page;

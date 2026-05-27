@@ -2,13 +2,13 @@ package com.io.banking.transactions.service;
 
 import com.io.banking.accounts.model.entity.Account;
 import com.io.banking.accounts.model.enums.Currency;
-import com.io.banking.accounts.repository.AccountRepository;
+import com.io.banking.accounts.persistence.AccountRepository;
 import com.io.banking.shared.security.model.AuthenticatedUser;
 import com.io.banking.transactions.model.dto.TransactionCreateRequest;
 import com.io.banking.transactions.model.dto.TransactionResponse;
 import com.io.banking.transactions.model.entity.Transaction;
 import com.io.banking.transactions.model.enums.TransactionType;
-import com.io.banking.transactions.repository.TransactionRepository;
+import com.io.banking.transactions.persistence.TransactionRepository;
 import com.io.banking.transactions.service.impl.TransactionServiceImpl;
 import com.io.banking.users.model.entity.User;
 import com.io.banking.users.model.enums.Role;

@@ -1,6 +1,6 @@
 package com.io.banking.transactions.service.impl;
 
-import com.io.banking.accounts.repository.AccountRepository;
+import com.io.banking.accounts.persistence.AccountRepository;
 import com.io.banking.shared.exception.AccountAccessDeniedException;
 import com.io.banking.shared.exception.InvalidAmountException;
 import com.io.banking.shared.exception.InsufficientFundsException;
@@ -12,7 +12,7 @@ import com.io.banking.transactions.model.dto.TransactionResponse;
 import com.io.banking.transactions.model.entity.Transaction;
 import com.io.banking.transactions.model.enums.TransactionStatus;
 import com.io.banking.transactions.model.enums.TransactionType;
-import com.io.banking.transactions.repository.TransactionRepository;
+import com.io.banking.transactions.persistence.TransactionRepository;
 import com.io.banking.transactions.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

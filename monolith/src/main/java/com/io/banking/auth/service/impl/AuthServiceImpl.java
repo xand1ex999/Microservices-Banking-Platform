@@ -15,7 +15,7 @@ import com.io.banking.users.mapper.UserMapper;
 import com.io.banking.users.model.dto.UserResponse;
 import com.io.banking.users.model.entity.User;
 import com.io.banking.users.model.enums.Role;
-import com.io.banking.users.repository.UserRepository;
+import com.io.banking.users.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

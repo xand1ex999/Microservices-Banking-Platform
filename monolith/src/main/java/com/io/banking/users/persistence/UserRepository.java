@@ -1,4 +1,4 @@
-package com.io.banking.users.repository;
+package com.io.banking.users.persistence;
 
 import com.io.banking.users.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
