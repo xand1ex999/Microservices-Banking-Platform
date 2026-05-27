@@ -11,5 +11,5 @@ public interface NotificationService {
 
     void notifyWithdrawal(Long userId, BigDecimal amount);
 
-    void notifyAccountFrozen(UUID accountId);
+    void notifyAccountFrozen(UUID accountId, Long userId);
 }
