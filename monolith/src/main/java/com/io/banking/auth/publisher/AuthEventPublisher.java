@@ -17,15 +17,21 @@ public class AuthEventPublisher {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void publishUserRegistered(Long userId, String email) {
-        kafkaTemplate.send(KafkaTopic.USER_REGISTERED.value(), String.valueOf(userId),
-                        new UserRegisteredEvent(userId, email, Instant.now()))
+        String key = String.valueOf(userId);
+        UserRegisteredEvent event = new UserRegisteredEvent(userId, email, Instant.now());
+
+        log.info("[KAFKA] Publishing UserRegisteredEvent: topic={}, key={}, userId={}",
+                KafkaTopic.USER_REGISTERED, key, userId);
+
+        kafkaTemplate.send(KafkaTopic.USER_REGISTERED, key, event)
                 .whenComplete((result, ex) -> {
                     if (ex != null) {
-                        log.error("[KAFKA] Failed to send UserRegisteredEvent for userId={}: {}", userId, ex.getMessage());
-                    } else {
-                        log.info("[KAFKA] UserRegisteredEvent sent for userId={}, offset={}",
-                                userId, result.getRecordMetadata().offset());
+                        log.error("[KAFKA] Send failed: userId={}, error={}", userId, ex.getMessage(), ex);
+                        return;
                     }
+                    var meta = result.getRecordMetadata();
+                    log.info("[KAFKA] Sent: userId={}, topic={}, partition={}, offset={}",
+                            userId, meta.topic(), meta.partition(), meta.offset());
                 });
     }
 }
