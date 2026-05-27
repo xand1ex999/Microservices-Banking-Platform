@@ -1,16 +1,9 @@
 package com.io.banking.notification.kafka;
 
-public enum KafkaTopic {
+public final class KafkaTopic {
 
-    USER_REGISTERED("user.registered");
+    public static final String USER_REGISTERED = "user.registered";
 
-    private final String value;
-
-    KafkaTopic(String value) {
-        this.value = value;
-    }
-
-    public String value() {
-        return value;
+    private KafkaTopic() {
     }
 }
