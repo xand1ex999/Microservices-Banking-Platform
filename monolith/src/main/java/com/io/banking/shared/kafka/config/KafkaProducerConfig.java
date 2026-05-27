@@ -31,7 +31,6 @@ public class KafkaProducerConfig {
         config.put(ProducerConfig.RETRIES_CONFIG, 3);
         config.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
         config.put(ProducerConfig.LINGER_MS_CONFIG, 10);
-        config.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
 
         return new DefaultKafkaProducerFactory<>(config);
     }
