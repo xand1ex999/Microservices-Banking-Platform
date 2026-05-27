@@ -1,4 +1,4 @@
-package com.io.banking.transactions.repository;
+package com.io.banking.transactions.persistence;
 
 import com.io.banking.transactions.model.entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
