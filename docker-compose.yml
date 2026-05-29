@@ -20,6 +20,7 @@ services:
   kafka:
     image: apache/kafka:3.7.0
     container_name: kafka_v1
+    hostname: kafka
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
