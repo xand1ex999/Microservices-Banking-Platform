@@ -15,14 +15,15 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Banking Platform</name>
-    <description>Banking Platform Monorepo</description>
+    <description>Banking Platform Microservices Monorepo</description>
 
     <properties>
         <java.version>21</java.version>
     </properties>
 
     <modules>
-        <module>monolith</module>
+        <module>auth-service</module>
+        <module>banking-service</module>
         <module>notification-service</module>
     </modules>
 
