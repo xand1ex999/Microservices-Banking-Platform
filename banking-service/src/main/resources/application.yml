@@ -1,0 +1,40 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: banking-service
+
+  datasource:
+    url: ${DB_BANKING_URL:jdbc:postgresql://localhost:5432/banking_db}
+    username: ${DB_BANKING_USERNAME:postgres}
+    password: ${DB_BANKING_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 20000
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+
+jwt:
+  secret: ${JWT_SECRET:mySecretKeyThatIsAtLeast256BitsLongForHS256}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
