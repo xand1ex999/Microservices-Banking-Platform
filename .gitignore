@@ -3,3 +3,5 @@
 target/
 .env
 .mvn/wrapper/maven-wrapper.jar
+CLAUDE.md
+ARCHITECTURE.md

@@ -9,10 +9,8 @@ import java.util.TimeZone;
 public class NotificationServiceApplication {
 
     public static void main(String[] args) {
-
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         SpringApplication.run(NotificationServiceApplication.class, args);
         System.out.println("Notification service started");
-
     }
 }
