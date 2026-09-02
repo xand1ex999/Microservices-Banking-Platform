@@ -15,6 +15,7 @@ public class AuthServiceApplication {
         System.out.println(
                 "▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞\n"
                         + "Auth Service: http://localhost:" + System.getenv("AUTH_PORT") + "/actuator/health\n"
+                        + "Swagger: http://localhost:" + System.getenv("AUTH_PORT") + "/swagger-ui/index.html\n"
                         + "▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞▞"
         );
     }
