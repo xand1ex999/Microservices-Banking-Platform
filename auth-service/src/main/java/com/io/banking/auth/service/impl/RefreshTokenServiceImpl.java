@@ -22,13 +22,13 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private final RefreshTokenRepository repository;
 
-    private static final SecureRandom random = new SecureRandom();
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     @Override
     @Transactional
     public String createRefreshToken(User user) {
         byte[] bytes = new byte[64];
-        random.nextBytes(bytes);
+        SECURE_RANDOM.nextBytes(bytes);
 
         String rawToken = Base64.getUrlEncoder()
                 .withoutPadding()
