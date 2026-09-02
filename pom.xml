@@ -26,6 +26,7 @@
         <checkstyle.failsOnError>true</checkstyle.failsOnError>
         <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
         <checkstyle.violationSeverity>warning</checkstyle.violationSeverity>
+        <datasource-micrometer.version>1.4.0</datasource-micrometer.version>
     </properties>
 
     <dependencyManagement>
@@ -34,6 +35,13 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ttddyy.observation</groupId>
+                <artifactId>datasource-micrometer-bom</artifactId>
+                <version>${datasource-micrometer.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

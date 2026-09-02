@@ -4,8 +4,12 @@ server:
 spring:
   application:
     name: api-gateway
+  reactor:
+    context-propagation: auto
   cloud:
     gateway:
+      observability:
+        enabled: true
       routes:
         - id: auth-service
           uri: ${AUTH_SERVICE_URL:http://localhost:8080}
@@ -95,3 +99,20 @@ resilience4j:
       bankingServiceCircuitBreaker:
         timeoutDuration: 3s
         cancelRunningFuture: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+    propagation:
+      type: w3c
+    baggage:
+      enabled: false
+  otlp:
+    tracing:
+      endpoint: ${MANAGEMENT_OTLP_TRACING_ENDPOINT:http://localhost:4318/v1/traces}
