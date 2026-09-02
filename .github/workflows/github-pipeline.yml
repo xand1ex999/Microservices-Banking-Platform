@@ -27,6 +27,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Run Checkstyle
+        run: mvn checkstyle:check --batch-mode --no-transfer-progress
+
       - name: Compile
         run: mvn clean compile --batch-mode --no-transfer-progress
 
