@@ -11,7 +11,87 @@ spring:
           uri: ${AUTH_SERVICE_URL:http://localhost:8080}
           predicates:
             - Path=/auth/**,/users/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: authServiceCircuitBreaker
+                fallbackUri: forward:/fallback/auth-service
+                statusCodes:
+                  - INTERNAL_SERVER_ERROR
+                  - BAD_GATEWAY
+                  - SERVICE_UNAVAILABLE
+                  - GATEWAY_TIMEOUT
+            - name: Retry
+              args:
+                retries: 2
+                methods: GET
+                statuses:
+                  - BAD_GATEWAY
+                  - SERVICE_UNAVAILABLE
+                  - GATEWAY_TIMEOUT
+                exceptions:
+                  - java.io.IOException
+                  - java.util.concurrent.TimeoutException
+                backoff:
+                  firstBackoff: 100ms
+                  maxBackoff: 500ms
+                  factor: 2
+                  basedOnPreviousValue: false
         - id: banking-service
           uri: ${BANKING_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/accounts/**,/transactions/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: bankingServiceCircuitBreaker
+                fallbackUri: forward:/fallback/banking-service
+                statusCodes:
+                  - INTERNAL_SERVER_ERROR
+                  - BAD_GATEWAY
+                  - SERVICE_UNAVAILABLE
+                  - GATEWAY_TIMEOUT
+            - name: Retry
+              args:
+                retries: 2
+                methods: GET
+                statuses:
+                  - BAD_GATEWAY
+                  - SERVICE_UNAVAILABLE
+                  - GATEWAY_TIMEOUT
+                exceptions:
+                  - java.io.IOException
+                  - java.util.concurrent.TimeoutException
+                backoff:
+                  firstBackoff: 100ms
+                  maxBackoff: 500ms
+                  factor: 2
+                  basedOnPreviousValue: false
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      authServiceCircuitBreaker:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+      bankingServiceCircuitBreaker:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+  timelimiter:
+    instances:
+      authServiceCircuitBreaker:
+        timeoutDuration: 3s
+        cancelRunningFuture: true
+      bankingServiceCircuitBreaker:
+        timeoutDuration: 3s
+        cancelRunningFuture: true

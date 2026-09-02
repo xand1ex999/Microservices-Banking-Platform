@@ -41,7 +41,11 @@ public class AuthController {
     @Operation(summary = "Get current user", description = "Returns information about the authenticated user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User information retrieved successfully"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            )
     })
     public String me(@AuthenticationPrincipal AuthenticatedUser user) {
         return "User ID: " + user.getId()
@@ -50,33 +54,66 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    @Operation(summary = "Register new user", description = "Creates a new user account with email, password, and name")
+    @Operation(
+            summary = "Register new user",
+            description = "Creates a new user account with email, password, and name"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User registered successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "409", description = "Email already exists", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request data",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "Email already exists",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            )
     })
     public ResponseEntity<UserResponse> register(@RequestBody @Valid RegistrationRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(request));
     }
 
     @PostMapping("/login")
-    @Operation(summary = "User login", description = "Authenticates user with email and password, returns access and refresh tokens")
+    @Operation(
+            summary = "User login",
+            description = "Authenticates user with email and password, returns access and refresh tokens"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Login successful"),
-            @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "401", description = "Invalid email or password", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request data",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid email or password",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            )
     })
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.login(request));
     }
 
     @PostMapping("/refresh")
-    @Operation(summary = "Refresh access token", description = "Generates a new access token using the refresh token")
+    @Operation(
+            summary = "Refresh access token",
+            description = "Generates a new access token using the refresh token"
+    )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Token refreshed successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid refresh token", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "401", description = "Refresh token expired or invalid", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid refresh token",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Refresh token expired or invalid",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            )
     })
     public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshRequest request) {
         return ResponseEntity.ok(authService.refreshToken(request.getRefreshToken()));
@@ -87,7 +124,11 @@ public class AuthController {
     @Operation(summary = "User logout", description = "Invalidates the refresh token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Logout successful"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            )
     })
     public ResponseEntity<Void> logout(@RequestBody RefreshRequest request) {
         refreshTokenService.logout(request.getRefreshToken());
